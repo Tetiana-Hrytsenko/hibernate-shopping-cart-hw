@@ -22,11 +22,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
+        ShoppingCart shoppingCartByUser = getByUser(user);
         Ticket ticket = new Ticket();
         ticket.setMovieSession(movieSession);
         ticket.setUser(user);
-        ticketDao.add(ticket);
-        ShoppingCart shoppingCartByUser = getByUser(user);
         shoppingCartByUser.getTickets().add(ticket);
         shoppingCartDao.update(shoppingCartByUser);
     }
@@ -39,9 +38,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void registerNewShoppingCart(User user) throws RegistrationException {
-        if (user == null || user.getId() == null) {
-            throw new RegistrationException("Can't register shopping cart. User is not persisted");
-        }
         try {
             ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
