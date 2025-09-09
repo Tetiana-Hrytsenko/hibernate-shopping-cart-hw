@@ -1,10 +1,8 @@
 package mate.academy.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import mate.academy.dao.ShoppingCartDao;
 import mate.academy.dao.TicketDao;
-import mate.academy.exception.RegistrationException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
@@ -39,16 +37,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void registerNewShoppingCart(User user) throws RegistrationException {
-        try {
-            ShoppingCart shoppingCart = new ShoppingCart();
-            shoppingCart.setUser(user);
-            shoppingCart.setTickets(new ArrayList<>());
-            shoppingCartDao.add(shoppingCart);
-        } catch (Exception e) {
-            throw new RegistrationException("Can't register shopping cart for user with Id: "
-                    + user.getId());
-        }
+    public void registerNewShoppingCart(User user) {
+        shoppingCartDao.add(new ShoppingCart(user));
     }
 
     @Override

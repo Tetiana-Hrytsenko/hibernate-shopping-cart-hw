@@ -9,6 +9,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,14 @@ public class ShoppingCart {
     @MapsId
     @JoinColumn(name = "id")
     private User user;
+
+    public ShoppingCart() {
+    }
+
+    public ShoppingCart(User user) {
+        this.user = user;
+        tickets = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
